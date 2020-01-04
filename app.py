@@ -1,4 +1,5 @@
 from flask import Flask, request
+import os
 import requests
 
 
@@ -19,7 +20,7 @@ def hello():
     kwargs['headers'].pop('Content-Length', None)
     kwargs['headers'].pop('Host', None)
 
-    resp = requests.post('https://nodered.roach.work/emby-webhooks', **kwargs)
+    resp = requests.post(os.environ['FORWARD_URL'], **kwargs)
 
     return (resp.text, resp.status_code, resp.headers.items())
 
