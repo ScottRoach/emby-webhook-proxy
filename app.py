@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route('/', methods=('GET', 'POST', 'HEAD', 'PUT', 'PATCH', 'DELETE'))
 def hello():
     kwargs = {
-        'data': request.form.get(None),
+        'data': request.form.get('data'),
         'headers': {},
     }
 
@@ -20,7 +20,7 @@ def hello():
     kwargs['headers'].pop('Content-Length', None)
     kwargs['headers'].pop('Host', None)
 
-    resp = requests.post(request.get('forward_url', os.environ['FORWARD_URL']), **kwargs)
+    resp = requests.post(request.args.get('forward_url', os.environ['FORWARD_URL']), **kwargs)
 
     return (resp.text, resp.status_code, resp.headers.items())
 
