@@ -20,7 +20,7 @@ def hello():
     kwargs['headers'].pop('Content-Length', None)
     kwargs['headers'].pop('Host', None)
 
-    resp = requests.post(os.environ['FORWARD_URL'], **kwargs)
+    resp = requests.post(request.get('forward_url', os.environ['FORWARD_URL']), **kwargs)
 
     return (resp.text, resp.status_code, resp.headers.items())
 
